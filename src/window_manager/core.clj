@@ -37,10 +37,13 @@
                                    background])
   (Integer XChangeProperty [display window property type format mode data num-elements])
   (Integer XChangeWindowAttributes [display window value-mask attributes])
-  (Integer XDeleteProperty [display window property]))
+  (Integer XDeleteProperty [display window property])
+  (Integer XSelectInput [display window event-mask])
+  (Integer XNextEvent [display event-return]))
 
 (def XA_WINDOW (NativeLong. 33))
 
+;; TODO: Should enums be pushed down to the shim layer to avoid duplicating c definitions?
 (def modes
   {:PropModeReplace 0
    :PropModePrepend 1
