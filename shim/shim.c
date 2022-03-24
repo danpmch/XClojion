@@ -20,3 +20,8 @@ Window
 get_root_window(Display *dpy, int scr) {
   return RootWindow(dpy, scr);
 }
+
+int
+call_error_handler(XErrorHandler handler,  Display *dpy, XErrorEvent *event) {
+  return handler(dpy, event);
+}

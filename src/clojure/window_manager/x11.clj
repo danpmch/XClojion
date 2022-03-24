@@ -1,6 +1,7 @@
 (ns window-manager.x11
   (:import (com.sun.jna Pointer
-                        NativeLong))
+                        NativeLong)
+           com.danmchenry.windowmanager.XErrorHandler)
   (:require [window-manager.jna :as jna])
   (:gen-class))
 
@@ -21,7 +22,16 @@
   (Integer XChangeWindowAttributes [display window value-mask attributes])
   (Integer XDeleteProperty [display window property])
   (Integer XSelectInput [display window event-mask])
-  (Integer XNextEvent [display event-return]))
+  (Integer XNextEvent [display event-return])
+  (Boolean XSupportsLocale [])
+  (Pointer XSetErrorHandler [handler])
+  (Integer XSync [display discard?]))
+
+(defmacro error-handler [args & body]
+  (let [callback 'callback]
+    `(reify XErrorHandler
+      (~callback [this ~@args]
+        ~@body))))
 
 (def XA_WINDOW (NativeLong. 33))
 
@@ -65,5 +75,6 @@
   (Integer get_default_screen [display])
   (Integer get_display_width [display screen])
   (Integer get_display_height [display screen])
-  (NativeLong get_root_window [display screen]))
+  (NativeLong get_root_window [display screen])
+  (Integer call_error_handler [handler display event]))
 

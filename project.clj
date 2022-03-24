@@ -5,6 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [net.java.dev.jna/jna "5.10.0"]]
+  :source-paths ["src/clojure"]
+  :java-source-paths ["src/java"]
   :main ^:skip-aot window-manager.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all

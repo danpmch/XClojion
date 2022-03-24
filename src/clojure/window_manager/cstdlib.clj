@@ -7,3 +7,8 @@
   (Integer puts [s])
   (String setlocale [category locale]))
 
+(def LC_CTYPE 0)
+
+(def FALSE 0)
+(def TRUE 1)
+
