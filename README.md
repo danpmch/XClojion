@@ -1,36 +1,19 @@
-# window-manager
+# XClojion
 
-FIXME: description
+An X11 window manager written (mostly) in Clojure. That description is aspirational at this point,
+currently it's a very partial reimplementation of [dwm](https://dwm.suckless.org/) that can make a
+handful of the XLib calls required to register the WM with the X server and that's it.
 
-## Installation
+It depends on the XLib native C library, and calling out to it from Clojure requires some supporting
+C and Java code. The java code lives in a conventional `src/java` directory. The C code lives in the
+`shim/` directory, and `make install` copies the library over into `resources/linux-x86-64` where it
+can be picked up by JNA. It's highly likely that the build process is not portable to other
+machines/distros than I'm currently using.
 
-Download from http://example.com/FIXME.
-
-## Usage
-
-FIXME: explanation
-
-    $ java -jar window-manager-0.1.0-standalone.jar [args]
-
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
-Copyright © 2022 FIXME
+Copyright © 2022
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
