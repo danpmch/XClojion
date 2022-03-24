@@ -10,9 +10,6 @@
 (def display (atom nil))
 (def original-error-handler (atom nil))
 
-(def callback-test (x11/error-handler [display error]
-                                      100))
-
 (defn check-other-wm []
   (let [test-callback (x11/error-handler [display xerror-event]
                                          (println "exclojion: another window manager is already running")
@@ -62,4 +59,9 @@
   (x11/get_default_screen display)
   (x11/get_display_width display (x11/get_default_screen display))
   (x11/get_display_height display (x11/get_default_screen display))
-  (x11/get_root_window display (x11/get_default_screen display)))
+  (x11/get_root_window display (x11/get_default_screen display))
+
+  (def callback-test (x11/error-handler [display error]
+                                        100))
+
+  (x11/call_error_handler callback-test Pointer/NULL Pointer/NULL))
