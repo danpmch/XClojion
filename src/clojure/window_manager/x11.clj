@@ -25,7 +25,12 @@
   (Integer XNextEvent [display event-return])
   (Boolean XSupportsLocale [])
   (Pointer XSetErrorHandler [handler])
-  (Integer XSync [display discard?]))
+  (Integer XSync [display discard?])
+  (NativeLong XCreatePixmap [display drawable width height depth])
+  (Pointer XCreateGC [display drawable valuemask values])
+  (Integer XSetLineAttributes [display gc line-width line-style cap-style join-style])
+  (NativeLong XCreateFontCursor [display shape])
+  (Integer XGetWindowAttributes [display window attrs]))
 
 (defmacro error-handler [args & body]
   (let [callback 'callback]
@@ -35,11 +40,19 @@
 
 (def XA_WINDOW (NativeLong. 33))
 
+(def LineSolid 0)
+(def CapButt 1)
+(def JoinMiter 0)
+
 ;; TODO: Should enums be pushed down to the shim layer to avoid duplicating c definitions?
 (def modes
   {:PropModeReplace 0
    :PropModePrepend 1
    :PropModeAppend 2})
+
+(def XC_left_ptr 68)
+(def XC_sizing 120)
+(def XC_fleur 52)
 
 (def << bit-shift-left)
 
@@ -71,10 +84,16 @@
    :ColormapChangeMask		(<< 1 23)
    :OwnerGrabButtonMask		(<< 1 24)})
 
+(def value-masks
+  {:CWEventMask (<< 1 11)
+   :CWCursor (<< 1 14)})
+
 (jna/defnative wmshims
   (Integer get_default_screen [display])
   (Integer get_display_width [display screen])
   (Integer get_display_height [display screen])
+  (Integer get_default_depth [display screen])
   (NativeLong get_root_window [display screen])
-  (Integer call_error_handler [handler display event]))
+  (Integer call_error_handler [handler display event])
+  (Integer set_window_attributes [display window valuemask event-mask cur]))
 
